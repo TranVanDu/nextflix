@@ -33,7 +33,9 @@ const Show: NextPage = () => {
     <>
       <S.Container>
         {isLoading && <Loader />}
-        {isError && <NotFound tag="h1" description={t('dont_found')} />}
+        {isError && !data && (
+          <NotFound tag="h1" description={t('dont_found')} />
+        )}
         {data && (
           <S.FlexContent>
             <S.Title>

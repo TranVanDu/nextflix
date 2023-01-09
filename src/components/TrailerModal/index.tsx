@@ -69,7 +69,7 @@ export const TrailerModal = ({
           <MdClose fontSize="30px" aria-hidden="true" />
         </S.CloseButton>
         {isLoading && <Loader />}
-        {isError && (
+        {isError && !data && (
           <NotFound tag="h3" description={t('trailerModal.dontFound')} />
         )}
         {data?.key ? (
