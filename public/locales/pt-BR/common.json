@@ -1,3 +1,5 @@
 {
-  "test": "Isso é apenas um teste"
+  "trailer_modal": {
+    "dont_found": "Trailer não encontrado"
+  }
 }
