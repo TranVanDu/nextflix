@@ -25,14 +25,9 @@ export const navData = [
     networkId: '64'
   },
   {
-    name: 'FOX',
-    path: '/network/19',
-    networkId: '19'
-  },
-  {
-    name: 'globo',
-    path: '/network/60',
-    networkId: '60'
+    name: 'globoplay',
+    path: '/network/3290',
+    networkId: '3290'
   },
   {
     name: 'CBS',
@@ -45,14 +40,24 @@ export const navData = [
     networkId: '44'
   },
   {
-    name: 'nat geo',
+    name: 'national geo',
     path: '/network/43',
     networkId: '43'
+  },
+  {
+    name: 'adult swim',
+    path: '/network/80',
+    networkId: '80'
   },
   {
     name: 'TNT',
     path: '/network/41',
     networkId: '41'
+  },
+  {
+    name: 'record TV',
+    path: '/network/535',
+    networkId: '535'
   },
   {
     name: 'FX',

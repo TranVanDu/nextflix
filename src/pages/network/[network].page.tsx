@@ -58,18 +58,19 @@ const Network: NextPage = () => {
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const networks = [
-    '19',
-    '41',
-    '16',
-    '88',
-    '43',
-    '44',
-    '64',
-    '94',
-    '60',
-    '213',
     '1024',
-    '2739'
+    '213',
+    '2739',
+    '94',
+    '64',
+    '3290',
+    '16',
+    '44',
+    '43',
+    '80',
+    '41',
+    '535',
+    '88'
   ]
   const paths = networks.flatMap(network =>
     locales!.map(locale => ({ params: { network }, locale }))
