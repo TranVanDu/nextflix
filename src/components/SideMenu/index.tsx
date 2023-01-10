@@ -22,15 +22,11 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
   const greaterThan1025 = useMediaQuery('(min-width: 1025px)')
 
   useEffect(() => {
+    const fireKeyPress = (e: KeyboardEvent) =>
+      handleKeyPress(e, closeMenu, buttonWhatsappRef, buttonCloseRef)
     !greaterThan1025 && isMenuOpen && firstLinkRef.current?.focus()
-    !greaterThan1025 &&
-      document.addEventListener('keydown', e =>
-        handleKeyPress(e, closeMenu, buttonWhatsappRef, buttonCloseRef)
-      )
-    return () =>
-      document.removeEventListener('keydown', e =>
-        handleKeyPress(e, closeMenu, buttonWhatsappRef, buttonCloseRef)
-      )
+    !greaterThan1025 && document.addEventListener('keydown', fireKeyPress)
+    return () => document.removeEventListener('keydown', fireKeyPress)
   }, [isMenuOpen, closeMenu, greaterThan1025])
 
   return (
