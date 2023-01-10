@@ -19,7 +19,7 @@ export const TrailerModal = ({
   setTrailerVisibility
 }: TrailerModalProps) => {
   const router = useRouter()
-  const { t } = useTranslation('common')
+  const { t, ready } = useTranslation('common')
   const trailerModalRef = useRef<HTMLDivElement>(null)
   const buttonCloseRef = useRef<HTMLButtonElement>(null)
   const trailerIframeRef = useRef<HTMLIFrameElement>(null)
@@ -88,7 +88,10 @@ export const TrailerModal = ({
             ref={trailerIframeRef}
           ></iframe>
         ) : (
-          <NotFound tag="h3" description={t('trailer_modal.dont_found')} />
+          <NotFound
+            tag="h3"
+            description={ready ? t('trailer_modal.dont_found') : ' '}
+          />
         )}
       </S.Container>
     </>,

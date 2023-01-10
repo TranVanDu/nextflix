@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -16,16 +16,19 @@ import { useMountTransition } from '../../hooks'
 import { shimmer, toBase64 } from '../../utils'
 import { Loader } from '../../components/Loader'
 import { TrailerModal } from '../../components/TrailerModal'
-import * as S from './styles'
 import { NotFound } from '../../components/NotFound'
+import * as S from './styles'
 
 const Show: NextPage = () => {
   const router = useRouter()
-  const { t } = useTranslation('movie-page')
+  const { t, i18n } = useTranslation(['movie-page', 'common'])
   const { data, isLoading, isError } = useQueryMovieDetails(
     router.query.movie as string,
     router.locale!
   )
+  useEffect(() => {
+    i18n.reloadResources(i18n.resolvedLanguage, ['movie-page', 'common'])
+  }, [i18n])
   const [trailerVisibility, setTrailerVisibility] = useState(false)
   const hasTransitionedIn = useMountTransition(trailerVisibility, 500)
 
@@ -64,14 +67,14 @@ const Show: NextPage = () => {
                 <p>
                   <MdStar
                     style={{ color: 'yellow' }}
-                    aria-label={t('vote_average')}
+                    aria-label={t('vote_average') as string}
                   />
                   {(data.vote_average * 10).toFixed(0)}%
                 </p>
               )}
               {data.last_air_date && (
                 <p>
-                  <MdCalendarToday aria-label={t('last_air_date')} />{' '}
+                  <MdCalendarToday aria-label={t('last_air_date') as string} />{' '}
                   {new Date(data.last_air_date).getFullYear()}
                 </p>
               )}
@@ -83,7 +86,7 @@ const Show: NextPage = () => {
               )}
             </S.Infos>
             {data.genres[0] && (
-              <S.Genres aria-label={t('genres')}>
+              <S.Genres aria-label={t('genres') as string}>
                 {data.genres.map(genre => (
                   <li key={'genres' + genre.name + genre.id}>{genre.name}</li>
                 ))}
@@ -95,6 +98,7 @@ const Show: NextPage = () => {
                 <p>{data.created_by[0].name}</p>
               </S.Creator>
             )}
+
             {data.overview && (
               <div>
                 <h3 className="h4">{t('overview')}</h3>
