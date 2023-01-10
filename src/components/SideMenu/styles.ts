@@ -41,6 +41,7 @@ export const Container = styled.nav`
   }
   @media (min-width: 1025px) {
     transform: translateX(0);
+    border-right: none;
   }
 `
 export const Header = styled.div`

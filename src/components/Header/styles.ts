@@ -17,6 +17,7 @@ export const Container = styled.header`
   @media (min-width: 1025px) {
     max-width: calc(100% - 17.5rem);
     margin-left: 17.5rem;
+    border-left: 1px solid var(--color-divider);
   }
 `
 export const IconButton = styled.button`
