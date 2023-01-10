@@ -40,7 +40,7 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
         aria-label="main"
         aria-modal={!greaterThan1025 && isMenuOpen}
         aria-hidden={!greaterThan1025 && !isMenuOpen}
-        className={isMenuOpen ? 'isOpen' : ''}
+        className={isMenuOpen || greaterThan1025 ? 'isOpen' : ''}
       >
         <S.Header>
           <FakeLogo />

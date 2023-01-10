@@ -36,12 +36,12 @@ export const Container = styled.nav`
   transform: translateX(-100%);
   transition: 0.3s transform ease-in-out;
 
+  @media (min-width: 1025px) {
+    border-right: none;
+    transition-duration: 0.15s;
+  }
   &.isOpen {
     transform: translateX(0);
-  }
-  @media (min-width: 1025px) {
-    transform: translateX(0);
-    border-right: none;
   }
 `
 export const Header = styled.div`
