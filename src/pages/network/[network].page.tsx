@@ -20,36 +20,38 @@ const Network: NextPage = () => {
       {isLoading && <Loader />}
       {data && (
         <S.Grid>
-          {data.results.map(movie => (
-            <Link
-              key={'linkmoviecard' + movie.id + movie.name}
-              href={{
-                pathname: '/movie/[movie]',
-                query: { movie: movie.id, network: router.query.network }
-              }}
-            >
-              <S.Card>
-                <S.ImgContainer>
-                  <Image
-                    alt=""
-                    aria-hidden="true"
-                    src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-                    fill
-                    priority
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                      shimmer(300, 200)
-                    )}`}
-                    sizes="(max-width: 600px) 50vw,
+          {data.results
+            .filter(result => result.poster_path !== null || undefined)
+            .map(movie => (
+              <Link
+                key={'linkmoviecard' + movie.id + movie.name}
+                href={{
+                  pathname: '/movie/[movie]',
+                  query: { movie: movie.id, network: router.query.network }
+                }}
+              >
+                <S.Card>
+                  <S.ImgContainer>
+                    <Image
+                      alt=""
+                      aria-hidden="true"
+                      src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+                      fill
+                      priority
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                        shimmer(300, 200)
+                      )}`}
+                      sizes="(max-width: 600px) 50vw,
                           (max-width: 960px) 33vw,
                           (max-width: 1180px) 25vw,
                           205px"
-                  />
-                </S.ImgContainer>
-                <p>{movie.name}</p>
-              </S.Card>
-            </Link>
-          ))}
+                    />
+                  </S.ImgContainer>
+                  <p>{movie.name}</p>
+                </S.Card>
+              </Link>
+            ))}
         </S.Grid>
       )}
     </S.Container>
