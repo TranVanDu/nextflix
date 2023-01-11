@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { NextSeo } from 'next-seo'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import nextI18NextConfig from '../../../next-i18next.config.js'
@@ -34,6 +35,22 @@ const Show: NextPage = () => {
 
   return (
     <>
+      <NextSeo
+        title={data?.name}
+        description={data?.overview}
+        openGraph={{
+          images: [
+            {
+              url: `https://image.tmdb.org/t/p/w1280/${data?.backdrop_path}`,
+              alt: data?.name,
+              width: 1200,
+              height: 630
+            }
+          ],
+          title: data?.name,
+          description: data?.overview
+        }}
+      />
       <S.Container>
         {isLoading && <Loader />}
         {isError && !data && (
