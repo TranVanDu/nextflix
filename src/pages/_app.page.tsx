@@ -10,8 +10,10 @@ import {
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import NextNProgress from 'nextjs-progressbar'
-import { Layout } from '../components/Layout'
+import { DefaultSeo } from 'next-seo'
+import SEO from '../../next-seo.config'
 import { Roboto } from '@next/font/google'
+import { Layout } from '../components/Layout'
 import { GlobalStyle } from '../styles'
 
 const roboto = Roboto({
@@ -37,14 +39,15 @@ function MyApp({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <NextNProgress
-          color="#ea0b2f"
-          startPosition={0.3}
-          stopDelayMs={200}
-          height={3}
-          showOnShallow
-        />
         <div className={roboto.className}>
+          <NextNProgress
+            color="#ea0b2f"
+            startPosition={0.3}
+            stopDelayMs={200}
+            height={3}
+            showOnShallow
+          />
+          <DefaultSeo {...SEO} />
           <Layout>
             <Component {...pageProps} />
           </Layout>
