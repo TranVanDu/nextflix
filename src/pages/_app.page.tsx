@@ -11,7 +11,14 @@ import {
 import { ReactQueryDevtools } from 'react-query/devtools'
 import NextNProgress from 'nextjs-progressbar'
 import { Layout } from '../components/Layout'
+import { Roboto } from '@next/font/google'
 import { GlobalStyle } from '../styles'
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin']
+})
 
 function MyApp({
   Component,
@@ -37,10 +44,12 @@ function MyApp({
           height={3}
           showOnShallow
         />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        <GlobalStyle />
+        <div className={roboto.className}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <GlobalStyle />
+        </div>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
