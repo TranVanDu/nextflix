@@ -9,6 +9,7 @@ import {
   type DehydratedState
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import NextNProgress from 'nextjs-progressbar'
 import { Layout } from '../components/Layout'
 import { GlobalStyle } from '../styles'
 
@@ -29,6 +30,13 @@ function MyApp({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
+        <NextNProgress
+          color="#ea0b2f"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={3}
+          showOnShallow
+        />
         <Layout>
           <Component {...pageProps} />
         </Layout>
