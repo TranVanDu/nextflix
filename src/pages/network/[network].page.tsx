@@ -1,58 +1,33 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import Link from 'next/link'
 import { dehydrate, QueryClient } from 'react-query'
-import { getMovieList, useQueryMovieList } from '../../querys'
-import { shimmer, toBase64 } from '../../utils'
+import {
+  getMovieList,
+  getNetwork,
+  useQueryMovieList,
+  useQueryNetwork
+} from '../../querys'
 import { Loader } from '../../components/Loader'
+import { MovieList } from './MovieList'
 import * as S from './styles'
 
 const Network: NextPage = () => {
   const router = useRouter()
-  const { data, isLoading } = useQueryMovieList(
+  const { data: movieList, isLoading: isLoadingList } = useQueryMovieList(
     router.query.network as string,
     router.locale!
+  )
+  const { data: networkDetails, isLoading: isLoadingNetwork } = useQueryNetwork(
+    router.query.network as string
   )
 
   return (
     <S.Container>
-      {isLoading && <Loader />}
-      {data && (
-        <S.Grid>
-          {data.results
-            .filter(result => result.poster_path !== null || undefined)
-            .map(movie => (
-              <Link
-                key={'linkmoviecard' + movie.id + movie.name}
-                href={{
-                  pathname: '/movie/[movie]',
-                  query: { movie: movie.id, network: router.query.network }
-                }}
-              >
-                <S.Card>
-                  <S.ImgContainer>
-                    <Image
-                      alt=""
-                      aria-hidden="true"
-                      src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-                      fill
-                      priority
-                      placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                        shimmer(300, 200)
-                      )}`}
-                      sizes="(max-width: 600px) 50vw,
-                          (max-width: 960px) 33vw,
-                          (max-width: 1180px) 25vw,
-                          205px"
-                    />
-                  </S.ImgContainer>
-                  <p>{movie.name}</p>
-                </S.Card>
-              </Link>
-            ))}
-        </S.Grid>
+      {(isLoadingList || isLoadingNetwork) && <Loader />}
+      {movieList && networkDetails && (
+        <>
+          <MovieList movieList={movieList} network={networkDetails.id} />
+        </>
       )}
     </S.Container>
   )
@@ -88,6 +63,10 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   await queryClient.prefetchQuery(
     ['movie list', params?.network, locale, '1'],
     getMovieList
+  )
+  await queryClient.prefetchQuery(
+    ['network details', params?.network],
+    getNetwork
   )
   return {
     props: {
