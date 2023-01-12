@@ -1,5 +1,7 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import nextI18NextConfig from '../../../next-i18next.config.js'
 import { dehydrate, QueryClient } from 'react-query'
 import {
   getMovieList,
@@ -8,6 +10,7 @@ import {
   useQueryNetwork
 } from '../../querys'
 import { Loader } from '../../components/Loader'
+import { NetworkBanner } from './NetworkBanner'
 import { MovieList } from './MovieList'
 import * as S from './styles'
 
@@ -26,6 +29,10 @@ const Network: NextPage = () => {
       {(isLoadingList || isLoadingNetwork) && <Loader />}
       {movieList && networkDetails && (
         <>
+          <NetworkBanner
+            movieList={movieList}
+            networkDetails={networkDetails}
+          />
           <MovieList movieList={movieList} network={networkDetails.id} />
         </>
       )}
@@ -70,6 +77,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   )
   return {
     props: {
+      ...(await serverSideTranslations(
+        locale!,
+        ['network'],
+        nextI18NextConfig
+      )),
       dehydratedState: dehydrate(queryClient)
     }
   }
