@@ -48,7 +48,7 @@ export const Header = styled.div`
   min-height: 4.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding: 0.5rem 1.8rem;
   border-bottom: 1px solid var(--color-divider);
   @media (min-width: 1025px) {
@@ -63,6 +63,7 @@ export const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--color-white);
   background-color: var(--color-neutral-800);
 
   @media (min-width: 1025px) {

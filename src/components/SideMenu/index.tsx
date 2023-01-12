@@ -51,7 +51,7 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
             onClick={closeMenu}
             ref={buttonCloseRef}
           >
-            <MdClose fontSize="30" aria-hidden="true" />
+            <MdClose fontSize="25" aria-hidden="true" />
           </S.CloseBtn>
         </S.Header>
         <S.NavItems>
