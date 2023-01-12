@@ -1,7 +1,9 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import nextI18NextConfig from '../../../next-i18next.config.js'
+import { useTranslation } from 'next-i18next'
 import { dehydrate, QueryClient } from 'react-query'
 import {
   getMovieList,
@@ -16,6 +18,7 @@ import * as S from './styles'
 
 const Network: NextPage = () => {
   const router = useRouter()
+  const { t } = useTranslation(['network'])
   const { data: movieList, isLoading: isLoadingList } = useQueryMovieList(
     router.query.network as string,
     router.locale!
@@ -25,18 +28,36 @@ const Network: NextPage = () => {
   )
 
   return (
-    <S.Container>
-      {(isLoadingList || isLoadingNetwork) && <Loader />}
-      {movieList && networkDetails && (
-        <>
-          <NetworkBanner
-            movieList={movieList}
-            networkDetails={networkDetails}
-          />
-          <MovieList movieList={movieList} network={networkDetails.id} />
-        </>
-      )}
-    </S.Container>
+    <>
+      <NextSeo
+        title={`${networkDetails?.name} ${t('shows')}`}
+        description={`${t('description')} ${networkDetails?.name}`}
+        openGraph={{
+          title: `${networkDetails?.name} ${t('shows')}`,
+          url: `https://nextflix-app.vercel.app/network/${networkDetails?.id}/`,
+          images: [
+            {
+              url: `https://nextflix-app.vercel.app/assets/open-graph/network-${networkDetails?.id}.png`,
+              alt: networkDetails?.name,
+              width: 1200,
+              height: 630
+            }
+          ]
+        }}
+      />
+      <S.Container>
+        {(isLoadingList || isLoadingNetwork) && <Loader />}
+        {movieList && networkDetails && (
+          <>
+            <NetworkBanner
+              movieList={movieList}
+              networkDetails={networkDetails}
+            />
+            <MovieList movieList={movieList} network={networkDetails.id} />
+          </>
+        )}
+      </S.Container>
+    </>
   )
 }
 
