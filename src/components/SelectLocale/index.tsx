@@ -20,13 +20,14 @@ export const SelectLocale = ({ options = optionsData }: SelectLocaleProps) => {
   const listRef = useRef<HTMLUListElement>(null)
 
   const handleLocaleChange = () => {
-    router.push(
-      { pathname: router.pathname, query: router.query },
-      router.asPath,
-      {
-        locale: options[activeIndex].value
-      }
-    )
+    options[activeIndex].value !== router.locale &&
+      router.push(
+        { pathname: router.pathname, query: router.query },
+        router.asPath,
+        {
+          locale: options[activeIndex].value
+        }
+      )
   }
   const focusOpition = (index?: number) =>
     (listRef.current?.children[index ?? activeIndex] as HTMLElement).focus()
@@ -78,7 +79,7 @@ export const SelectLocale = ({ options = optionsData }: SelectLocaleProps) => {
               tabIndex={-1}
               aria-selected={option.value === router.locale}
               onMouseOver={() => handleIndex(index)}
-              onClick={toggleMenu}
+              onClick={() => handleIndex(index)}
             >
               <div>
                 <span aria-hidden="true">{option.flag + ' '}</span>

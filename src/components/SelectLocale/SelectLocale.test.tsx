@@ -131,10 +131,23 @@ describe('SelectLocale', () => {
     )
   })
 
+  it('should not call router.push when the same option is selected', async () => {
+    const user = userEvent.setup()
+    const mockRouter = {
+      locale: 'es-ES',
+      push: jest.fn()
+    }
+    SelectLocaleCustomRender(mockRouter)
+
+    await user.click(screen.getByRole('combobox'))
+    await user.click(screen.getByRole('option', { name: /español/i }))
+
+    expect(mockRouter.push).not.toHaveBeenCalled()
+  })
+
   it('should close the menu when a click occurs outside the component', async () => {
     const user = userEvent.setup()
-    const push = jest.fn()
-    SelectLocaleCustomRender({ push })
+    SelectLocaleCustomRender()
 
     await user.click(screen.getByRole('combobox'))
     expect(screen.getByRole('listbox')).toBeInTheDocument()
@@ -142,7 +155,6 @@ describe('SelectLocale', () => {
     await user.click(document.body)
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-    expect(push).toHaveBeenCalled()
   })
 
   it('should open the menu when the Enter key is pressed', async () => {
@@ -199,8 +211,7 @@ describe('SelectLocale', () => {
 
   it('should close the menu when the Enter key is pressed', async () => {
     const user = userEvent.setup()
-    const push = jest.fn()
-    SelectLocaleCustomRender({ push })
+    SelectLocaleCustomRender()
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -210,13 +221,11 @@ describe('SelectLocale', () => {
     await user.keyboard('[Enter]')
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-    expect(push).toHaveBeenCalled()
   })
 
   it('should close the menu when the Escape key is pressed', async () => {
     const user = userEvent.setup()
-    const push = jest.fn()
-    SelectLocaleCustomRender({ push })
+    SelectLocaleCustomRender()
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -226,13 +235,11 @@ describe('SelectLocale', () => {
     await user.keyboard('[Escape]')
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-    expect(push).toHaveBeenCalled()
   })
 
   it('should close the menu when the Tab key is pressed', async () => {
     const user = userEvent.setup()
-    const push = jest.fn()
-    SelectLocaleCustomRender({ push })
+    SelectLocaleCustomRender()
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -242,13 +249,11 @@ describe('SelectLocale', () => {
     await user.keyboard('[Tab]')
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-    expect(push).toHaveBeenCalled()
   })
 
   it('should close the menu when the " " key is pressed', async () => {
     const user = userEvent.setup()
-    const push = jest.fn()
-    SelectLocaleCustomRender({ push })
+    SelectLocaleCustomRender()
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -258,7 +263,6 @@ describe('SelectLocale', () => {
     await user.keyboard(' ')
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-    expect(push).toHaveBeenCalled()
   })
 
   it('should focus the correct option when the ArrowDown key is pressed', async () => {
