@@ -19,7 +19,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/network/2739',
+        destination: '/network/213',
         permanent: false
       },
       {
