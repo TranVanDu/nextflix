@@ -26,11 +26,11 @@ export const ImgContainer = styled.div`
 `
 export const Logo = styled.div`
   position: absolute;
-  width: 40%;
-  height: 30%;
+  width: 43%;
+  height: 43%;
   left: 0;
   top: 40%;
-  transform: translateY(-50%);
+  transform: translateY(-40%);
 
   img {
     object-fit: contain;
@@ -38,6 +38,7 @@ export const Logo = styled.div`
 
   @media (min-width: 500px) {
     top: 50%;
+    transform: translateY(-50%);
   }
 `
 export const Gradient = styled.div`

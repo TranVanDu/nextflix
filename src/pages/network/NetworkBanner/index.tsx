@@ -62,7 +62,7 @@ export const NetworkBanner = ({
       <S.Logo>
         <Image
           alt={`${networkDetails.name} logo`}
-          src={`https://image.tmdb.org/t/p/original/${networkDetails.logo_path}`}
+          src={`/assets/logos/${networkDetails.id}.png`}
           fill
         />
       </S.Logo>
