@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 
 export const LoadingWrapper = styled.div`
   width: 100%;
-  margin-top: 30vh;
+  padding-top: 30vh;
   display: flex;
   justify-content: center;
 `
