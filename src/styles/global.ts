@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     color-scheme: dark;
     --color-white: #fff;
     --color-black: #151419;
-    --color-primary-main: #171821;
+    --color-primary-main: #171925;
     --color-primary-light: #3d3e48;
     --color-primary-dark: #000000;
     --color-secondary-main:#ea0b2f;
