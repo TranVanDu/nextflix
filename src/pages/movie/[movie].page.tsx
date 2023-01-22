@@ -45,6 +45,9 @@ const Show: NextPage = () => {
         title={data?.name}
         description={data?.overview}
         openGraph={{
+          title: data?.name,
+          url: `https://nextflix-app.vercel.app/movie/${data?.id}/`,
+          description: data?.overview,
           images: [
             {
               url: `https://image.tmdb.org/t/p/w1280/${data?.backdrop_path}`,
@@ -52,9 +55,7 @@ const Show: NextPage = () => {
               width: 1200,
               height: 630
             }
-          ],
-          title: data?.name,
-          description: data?.overview
+          ]
         }}
       />
       <S.Container>
