@@ -25,14 +25,14 @@ export const Container = styled.div`
   top: 50%;
   left: 50%;
   width: 95%;
-  max-width: 800px;
+  max-width: 50rem;
   aspect-ratio: 3/2;
   height: auto;
   max-height: 90%;
   border-radius: 0.35rem;
   background-color: var(--color-primary-main);
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
@@ -62,7 +62,8 @@ export const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: end;
+  align-self: flex-end;
+  color: var(--color-white);
   svg {
     transition: transform 0.2s ease-in-out;
     &:hover {

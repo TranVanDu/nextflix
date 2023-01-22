@@ -1,12 +1,11 @@
-/* eslint-disable multiline-ternary */
 import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { MdClose } from 'react-icons/md'
-import { Loader } from '../Loader'
-import { NotFound } from '../NotFound'
-import { useQueryMovieTrailer } from '../../querys'
+import { useQueryMovieTrailer } from '../../../querys'
+import { Loader } from '../../../components/Loader'
+import { NotFound } from '../../../components/NotFound'
 import * as S from './styles'
 
 interface TrailerModalProps {
@@ -19,11 +18,11 @@ export const TrailerModal = ({
   setTrailerVisibility
 }: TrailerModalProps) => {
   const router = useRouter()
-  const { t, ready } = useTranslation('common')
+  const { t } = useTranslation('common')
   const trailerModalRef = useRef<HTMLDivElement>(null)
   const buttonCloseRef = useRef<HTMLButtonElement>(null)
   const trailerIframeRef = useRef<HTMLIFrameElement>(null)
-  const { data, isLoading, isError } = useQueryMovieTrailer(
+  const { data, isLoading } = useQueryMovieTrailer(
     router.query.movie as string,
     router.locale!
   )
@@ -45,7 +44,11 @@ export const TrailerModal = ({
     }
     trailerModalRef.current?.focus()
     document.addEventListener('keydown', handleKeyPress)
-    return () => document.removeEventListener('keydown', handleKeyPress)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+      document.body.style.overflow = 'auto'
+    }
   }, [setTrailerVisibility])
 
   return ReactDOM.createPortal(
@@ -68,11 +71,11 @@ export const TrailerModal = ({
         >
           <MdClose fontSize="30px" aria-hidden="true" />
         </S.CloseButton>
-        {isLoading && <Loader />}
-        {isError && !data && (
-          <NotFound tag="h3" description={t('trailerModal.dontFound')} />
+        {!isLoading && !data?.key && (
+          <NotFound tag="h3" description={t('trailer_modal.dont_found')} />
         )}
-        {data?.key ? (
+        {isLoading && <Loader />}
+        {data?.key && (
           <iframe
             width="560"
             height="315"
@@ -87,11 +90,6 @@ export const TrailerModal = ({
             allowFullScreen
             ref={trailerIframeRef}
           ></iframe>
-        ) : (
-          <NotFound
-            tag="h3"
-            description={ready ? t('trailer_modal.dont_found') : ' '}
-          />
         )}
       </S.Container>
     </>,

@@ -1,29 +1,35 @@
 import { useEffect, useState } from 'react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
+import { useRouter } from 'next/router.js'
 import { NextSeo } from 'next-seo'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import nextI18NextConfig from '../../../next-i18next.config.js'
 import { dehydrate, QueryClient } from 'react-query'
+import { useMountTransition } from '../../hooks'
 import {
   getMovieDetails,
   getMovieTrailer,
   useQueryMovieDetails
 } from '../../querys'
-import { MdStar, MdCalendarToday, MdPlayCircleOutline } from 'react-icons/md'
-import { useMountTransition } from '../../hooks'
-import { shimmer, toBase64 } from '../../utils'
 import { Loader } from '../../components/Loader'
-import { TrailerModal } from '../../components/TrailerModal'
 import { NotFound } from '../../components/NotFound'
+import { MovieTitle } from './MovieTitle'
+import { MovieBackground } from './MovieBackground'
+import { MovieCreators } from './MovieCreators'
+import { MovieDetails } from './MovieDetails'
+import { MovieGenres } from './MovieGenres'
+import { MovieNetworks } from './MovieNetworks'
+import { MovieOverview } from './MovieOverview'
+import { MoviePoster } from './MoviePoster'
+import { TrailerModal } from './TrailerModal'
+import { Trailerbutton } from './Trailerbutton'
 import * as S from './styles'
 
 const Show: NextPage = () => {
   const router = useRouter()
   const { t, i18n } = useTranslation(['movie-page', 'common'])
-  const { data, isLoading, isError } = useQueryMovieDetails(
+  const { data, isLoading } = useQueryMovieDetails(
     router.query.movie as string,
     router.locale!
   )
@@ -52,81 +58,28 @@ const Show: NextPage = () => {
         }}
       />
       <S.Container>
-        {isLoading && <Loader />}
-        {isError && !data && (
+        {!isLoading && !data && (
           <NotFound tag="h1" description={t('dont_found')} />
         )}
+        {isLoading && <Loader />}
         {data && (
-          <S.FlexContent>
-            <S.Title>
-              <h1>{data.name}</h1>
-              <h2>{data.tagline}</h2>
-            </S.Title>
-            <S.PosterWrapper>
-              <Image
-                fill
-                priority
-                alt={`poster ${data.name}`}
-                src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
-                placeholder="blur"
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                  shimmer(700, 475)
-                )}`}
-                sizes="(max-width: 600px) 80vw,
-                      (max-width: 900px) 40vw,
-                      (max-width: 1025px) 35vw,
-                      (max-width: 1100px) 300px,
-                      350px"
+          <>
+            <MovieBackground backdropPath={data.backdrop_path} />
+            <S.Content>
+              <MovieTitle name={data.name} tagline={data.tagline} />
+              <MoviePoster name={data.name} posterPath={data.poster_path} />
+              <MovieNetworks networks={data.networks} />
+              <MovieDetails
+                voteAverage={data.vote_average}
+                lastAirDate={data.last_air_date}
+                numberOfSeasons={data.number_of_seasons}
               />
-            </S.PosterWrapper>
-            <S.Infos>
-              {data.vote_average && (
-                <p>
-                  <MdStar
-                    style={{ color: 'yellow' }}
-                    aria-label={t('vote_average') as string}
-                  />
-                  {(data.vote_average * 10).toFixed(0)}%
-                </p>
-              )}
-              {data.last_air_date && (
-                <p>
-                  <MdCalendarToday aria-label={t('last_air_date') as string} />{' '}
-                  {new Date(data.last_air_date).getFullYear()}
-                </p>
-              )}
-              {data.number_of_seasons && (
-                <p>
-                  {data.number_of_seasons} {t('season')}
-                  {data.number_of_seasons > 1 && 's'}
-                </p>
-              )}
-            </S.Infos>
-            {data.genres[0] && (
-              <S.Genres aria-label={t('genres') as string}>
-                {data.genres.map(genre => (
-                  <li key={'genres' + genre.name + genre.id}>{genre.name}</li>
-                ))}
-              </S.Genres>
-            )}
-            {data.created_by[0] && (
-              <S.Creator>
-                <h3>{t('creator')}</h3>
-                <p>{data.created_by[0].name}</p>
-              </S.Creator>
-            )}
-
-            {data.overview && (
-              <div>
-                <h3 className="h4">{t('overview')}</h3>
-                <p>{data.overview}</p>
-              </div>
-            )}
-            <S.Button type="button" onClick={() => setTrailerVisibility(true)}>
-              <MdPlayCircleOutline />
-              <span>{t('trailer_button')}</span>
-            </S.Button>
-          </S.FlexContent>
+              <MovieGenres genres={data.genres} />
+              <MovieCreators creators={data.created_by} />
+              <MovieOverview overview={data.overview} />
+              <Trailerbutton onClick={() => setTrailerVisibility(true)} />
+            </S.Content>
+          </>
         )}
       </S.Container>
       {(trailerVisibility || hasTransitionedIn) && (

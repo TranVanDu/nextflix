@@ -6,5 +6,9 @@
   "vote_average": "user score",
   "last_air_date": "last air date",
   "genres": "genres",
-  "dont_found": "Page Not Found"
+  "dont_found": "Page Not Found",
+  "tv_networks": "tv networks",
+  "movie_genres": "movie genres",
+  "creator_no_information": "No Information",
+  "profile_picture_alt": "profile picture of "
 }

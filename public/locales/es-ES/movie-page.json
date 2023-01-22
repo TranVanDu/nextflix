@@ -6,5 +6,9 @@
   "vote_average": "puntuación de usuario",
   "last_air_date": "última fecha de emisión",
   "genres": "géneros",
-  "dont_found": "Página No Encontrada"
+  "dont_found": "Página No Encontrada",
+  "tv_networks": "cadenas de televisión",
+  "movie_genres": "géneros de películas",
+  "creator_no_information": "No Informado",
+  "profile_picture_alt": "foto de perfil de "
 }
