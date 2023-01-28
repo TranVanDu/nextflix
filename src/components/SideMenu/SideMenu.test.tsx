@@ -23,7 +23,6 @@ describe('SideMenu', () => {
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
     expect(screen.getByRole('navigation')).toHaveClass('isOpen')
-    expect(screen.getByRole('navigation')).toHaveAttribute('aria-modal', 'true')
   })
 
   it('should close the menu when the close button is clicked', async () => {

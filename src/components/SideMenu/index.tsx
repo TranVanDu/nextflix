@@ -1,9 +1,14 @@
 import { useEffect, useRef } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FaGithub, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa'
+import Link from 'next/link'
+import Image from 'next/image'
+import {
+  FaGithub,
+  FaLinkedinIn,
+  FaWhatsapp,
+  FaRegEnvelope
+} from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
-import { FakeLogo } from '../FakeLogo'
 import { useMediaQuery } from '../../hooks'
 import { navData } from './navData'
 import { handleKeyPress } from './keyboard.utils'
@@ -26,7 +31,13 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
       handleKeyPress(e, closeMenu, buttonWhatsappRef, buttonCloseRef)
     !greaterThan1025 && isMenuOpen && firstLinkRef.current?.focus()
     !greaterThan1025 && document.addEventListener('keydown', fireKeyPress)
-    return () => document.removeEventListener('keydown', fireKeyPress)
+    !greaterThan1025
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'auto')
+    return () => {
+      document.removeEventListener('keydown', fireKeyPress)
+      document.body.style.overflow = 'auto'
+    }
   }, [isMenuOpen, closeMenu, greaterThan1025])
 
   return (
@@ -38,12 +49,13 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
       />
       <S.Container
         aria-label="main"
-        aria-modal={!greaterThan1025 && isMenuOpen}
         aria-hidden={!greaterThan1025 && !isMenuOpen}
         className={isMenuOpen || greaterThan1025 ? 'isOpen' : ''}
       >
         <S.Header>
-          <FakeLogo />
+          <S.Logo aria-hidden="true">
+            Next<span>Flix</span>
+          </S.Logo>
           <S.CloseBtn
             type="button"
             aria-label="close navigation"
@@ -68,6 +80,12 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
                 }
                 ref={index === 0 ? firstLinkRef : null}
               >
+                <Image
+                  src={`/assets/logos/small${item.networkId}.png`}
+                  width={25}
+                  height={25}
+                  alt=""
+                />
                 {item.name}
               </Link>
             </S.ItemLink>
@@ -75,6 +93,14 @@ export const SideMenu = ({ isMenuOpen, closeMenu }: SideMenuProps) => {
         </S.NavItems>
         <S.Footer>
           <ul>
+            <S.SocialListItem>
+              <Link
+                href="mailto:devmiqueias@gmail.com"
+                aria-label="dev miqueias email"
+              >
+                <FaRegEnvelope fontSize="20" aria-hidden="true" />
+              </Link>
+            </S.SocialListItem>
             <S.SocialListItem>
               <Link
                 href="https://github.com/devmiqueias/nextflix"

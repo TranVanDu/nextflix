@@ -25,7 +25,7 @@ export const Overlay = styled.div`
 export const Container = styled.nav`
   background-color: var(--color-primary-main);
   border-right: 1px solid var(--color-divider);
-  width: 17.5rem;
+  width: 17rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -49,10 +49,22 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1.8rem;
+  padding: 0.5rem 2.3rem 0.5rem 1.8rem;
   border-bottom: 1px solid var(--color-divider);
   @media (min-width: 1025px) {
-    justify-content: center;
+    justify-content: flex-start;
+  }
+`
+export const Logo = styled.h1`
+  cursor: default;
+  font-weight: 600;
+  line-height: 2.5rem;
+  font-size: calc(1.5rem + 1.5vw);
+  @media (min-width: 1024px) {
+    font-size: 2rem;
+  }
+  span {
+    color: var(--color-secondary-main);
   }
 `
 export const CloseBtn = styled.button`
@@ -78,6 +90,7 @@ export const NavItems = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
+  scroll-behavior: smooth;
 
   /* Firefox, IE and Edge */
   scrollbar-color: var(--color-primary-light) var(--color-primary-main);
@@ -102,11 +115,12 @@ export const NavItems = styled.ul`
 `
 export const ItemLink = styled.li`
   width: 100%;
-  min-height: 3.3rem;
+  min-height: 3.5rem;
   padding: 0 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
   a {
     width: 100%;
     height: 70%;
@@ -115,7 +129,9 @@ export const ItemLink = styled.li`
     text-transform: capitalize;
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding-left: 1rem;
     border-radius: 0.35rem;
     color: var(--color-white);
     &:hover {
@@ -134,7 +150,7 @@ export const ItemLink = styled.li`
 export const Footer = styled.div`
   width: 100%;
   min-height: 4.5rem;
-  padding: 0.5rem 1.8rem;
+  padding: 0.5rem 2.3rem 0.5rem 1.8rem;
   border-top: 1px solid var(--color-divider);
 
   ul {
@@ -142,7 +158,7 @@ export const Footer = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 `
 export const SocialListItem = styled.li`

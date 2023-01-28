@@ -15,8 +15,8 @@ export const Container = styled.header`
   z-index: 1000;
 
   @media (min-width: 1025px) {
-    max-width: calc(100% - 17.5rem);
-    margin-left: 17.5rem;
+    max-width: calc(100% - 17rem);
+    margin-left: 17rem;
     border-left: 1px solid var(--color-divider);
   }
 `
